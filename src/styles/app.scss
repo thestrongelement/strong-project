@@ -1,0 +1,23 @@
+//@import "bower_components/normalize-css/normalize";
+@import "bower_components/bourbon/app/assets/stylesheets/_bourbon.scss";
+@import "bower_components/neat/app/assets/stylesheets/_neat.scss";
+
+@import "functions/color";
+@import "functions/space";
+
+@import "mixins/type";
+
+@import "base/settings";
+
+body {
+ color: $color__text;
+ background: $color__background;
+}
+
+.flex {
+  display: flex;
+}
+
+h1 {
+  @include type(xl);
+}

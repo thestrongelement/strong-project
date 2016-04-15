@@ -1,0 +1,77 @@
+//ui dimensions
+$width--ui-max: 1348px;
+$width--ui-padding: 24px;
+
+$breakpoints: (
+  xs: 480px,
+  s: 667px,
+  m: 768px,
+  l: 1024px,
+  xl: 1280px,
+  xxl: 1440px
+);
+
+$fonts: (
+  body: sans-serif,
+  header: serif,
+  mono: monospace,
+  alt: sans-serif
+);
+
+$font-size: 1rem; //16px
+$line-height: 1.25;
+
+$type: (
+  xxs: 0.5rem 1.25,
+  xs: 0.75rem 1.33333333,
+  s: 0.875rem 1.2857142,
+  reg: $font-size $line-height,
+  m: 1.1125rem 1.33333333,
+  l: 1.1125rem 1.2727272,
+  xl: 1.875rem 1.2,
+  xxl: 2.375rem 1.2105263
+);
+
+
+
+//spacing
+$spacing: 4px;
+
+$spacing: (
+  xxs: $spacing*2,
+  xs: $spacing*3,
+  s: $spacing*6,
+  reg: $spacing*9,
+  l: $spacing*11,
+  xl: $spacing*14,
+  xxl: $spacing*30
+);
+
+$colors: (
+	gray: #EFEFEF,
+	light-gray: #F5F5F5,
+	offwhite: #F9F9F9,
+	white: #ffffff,
+	midnight-blue: #114958,
+	aqua: #1E7E98,
+	plum: #820068,
+	hibiscus: #E80134,
+	midnight-black: #211F1F,
+	cool-gray: #474F54,
+	dark-gray: #6F6F6F,
+	medium-gray: #AFAFAF,
+	red: #D81E17,
+	green: #1F7A18,
+	yellow: #FFA500
+);
+
+//elements
+$font__text: map-get($fonts, body) !global;
+$color__background: map-get($colors, light-gray) !global;
+$color__text: map-get($colors, midnight-black) !global;
+
+//neat vars
+$max-width: #{$width--ui-max} !global;
+$gutter: #{$width--ui-padding} !global;
+$border-box-sizing: true !global;
+$default-feature: min-width !global;

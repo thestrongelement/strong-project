@@ -1,0 +1,20 @@
+
+@mixin type($size: reg, $style: body) {
+  @if map-has-key($type, $size) {
+    $list: map-get($type, $size);
+  } @else {
+    $list: $font-size $line-height;
+  }
+  font-size: nth($list, 1);
+  line-height: nth($list, 2);
+
+
+  @if $style == header {
+    @if map-has-key($fonts, $style) {
+      font-family: map-get($fonts, $style);
+    } @else {
+      font-family: $font__text;
+    }
+
+  }
+}

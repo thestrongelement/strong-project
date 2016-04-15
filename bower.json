@@ -1,0 +1,23 @@
+{
+  "name": "strong-project",
+  "description": "",
+  "main": "gulpfile.js",
+  "authors": [
+    "zack Frazier <zack@zackfrazier.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/thestrongelement/strong-project",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "normalize-css": "^4.0.0",
+    "bourbon": "^4.2.6",
+    "neat": "^1.7.4"
+  }
+}
