@@ -1,7 +1,10 @@
 {
   "id": "strong",
   "title": "&lt;strong&gt;",
-  "description": "",
+  "meta": {
+    "description": "",   
+    "typekit": "sgo4zdh"  
+  },
   "home": {
     "title": "&lt;strong&gt;",
     "url": "index.html",

@@ -3,6 +3,7 @@ const $ = require('gulp-load-plugins')();
 const browserSync = require('browser-sync');
 const del = require('del');
 const handlebars = require('gulp-compile-handlebars');
+const nunjucks = require('gulp-nunjucks-html');
 const path = require('path');
 const yargs = require('yargs');
 
@@ -10,14 +11,15 @@ const PRODUCTION = !!(yargs.argv.production);
 
 const src = {
   path: 'src/',
-  data: 'data/**/*',
+  data: 'data/',
   public: 'public/**/*',
   scripts: 'src/scripts/**/*',
   images: 'src/images/**/*',
   styles: 'src/styles/*.scss',
   fonts: 'src/fonts',
-  html: 'src/templates',
-  includes: 'src/templates/includes'
+  html: 'src/templates/**/*.html',
+  layouts: 'src/templates/layouts/',
+  includes: 'src/templates/includes/'
 }
 
 const dist = {
@@ -29,6 +31,66 @@ const dist = {
   fonts: 'dist/fonts',
   html: 'dist/'
 }
+
+// environment setup
+var server;
+const date = new Date();
+
+//data
+const app = require('./' + src.data + 'app.json');
+
+// helpers
+
+// get key from file name, e.g. index.html returns index
+function getPageKey(file) {
+  var filePath = path.basename(file.path);
+  return filePath.replace(/\.[^/.]+$/, "");
+}
+var getAppData = function(file) {
+  try {
+    //set menu states
+    var selectedId = getPageKey(file);
+    app.menu.forEach(function (obj) {
+      obj.selected = obj.id === selectedId || selectedId.indexOf(obj.id) !== -1;
+    });
+    return { app: app };
+  } catch(err) {
+    console.log(err.message);
+  }
+  return { app: {} };
+};
+var getPageData = function(file) {
+  try {
+    var key = getPageKey(file);
+    var page = require('./' + src.data + key + '.json');
+    page.id = key;
+    return { page: page };
+  } catch(err) {
+    console.log(err.message);
+  }
+  return { page: {} };
+};
+
+
+
+// build static HTML files
+gulp.task('html', function () {
+  var options = {
+      batch: [src.includes]
+  }
+  return gulp.src([src.html, '!'+src.includes+'*', '!'+src.layouts+'*'])
+    .pipe($.data(getAppData))
+    .pipe($.data(getPageData))
+    .pipe(nunjucks({
+      searchPaths: [src.layouts, src.includes],
+      locals: {
+        date: date
+      }
+    }))
+    .pipe(gulp.dest(dist.path))
+//    .pipe(reload())
+});
+
 
 // process and transpile JS
 gulp.task('js', function() {
@@ -89,3 +151,13 @@ gulp.task('public', function() {
 
 //build
 gulp.task('build', $.sequence('clean','public','data','css','svg'));
+
+
+
+
+function reload() {
+  if (server) {
+    return browserSync.reload({ stream: true });
+  }
+  return $.util.noop();
+}

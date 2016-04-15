@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+{% include "app_meta.html" %}
+  </head>
+  <body id="app--{{ app.id }}">
+{% include "app_header.html" %}
+    <main class="app__main page--{{ page.id }}" role="main">
+      <article>
+{% block content %}{% endblock %}     
+      </article>
+
+    </main>
+{% include "app_footer.html" %}
+</body>
+</html>
