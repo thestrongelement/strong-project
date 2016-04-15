@@ -21,3 +21,11 @@ body {
 h1 {
   @include type(xl);
 }
+h2 {
+
+}
+
+h3 {
+  @include type();
+}
+

@@ -12,7 +12,7 @@ const src = {
   path: 'src/',
   data: 'data/**/*',
   public: 'public/**/*',
-  scripts: 'src/scripts',
+  scripts: 'src/scripts/**/*',
   images: 'src/images/**/*',
   styles: 'src/styles/*.scss',
   fonts: 'src/fonts',
@@ -30,13 +30,24 @@ const dist = {
   html: 'dist/'
 }
 
+// process and transpile JS
+gulp.task('js', function() {
+  return gulp.src(src.scripts)
+    .pipe($.include())
+    .pipe($.sourcemaps.init())
+    .pipe($.babel())
+    .pipe($.if(PRODUCTION, $.uglify()))
+    .pipe($.if(!PRODUCTION, $.sourcemaps.write()))
+		.pipe(gulp.dest(dist.scripts))
+		//.pipe(reload());
+});
 
 // process SASS
 gulp.task('css', function () {
   return gulp.src(src.styles)
     .pipe($.sourcemaps.init())
     .pipe($.sass({
-      outputStyle: (PRODUCTION?'compressed':'nested'), // libsass doesn't support expanded yet
+      outputStyle: (PRODUCTION?'compressed':'expanded'),
       precision: 10,
       includePaths: [src.styles],
       errLogToConsole: true
