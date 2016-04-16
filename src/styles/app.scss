@@ -1,4 +1,4 @@
-//@import "bower_components/normalize-css/normalize";
+@import "bower_components/normalize-css/normalize";
 @import "bower_components/bourbon/app/assets/stylesheets/_bourbon.scss";
 @import "bower_components/neat/app/assets/stylesheets/_neat.scss";
 
@@ -24,8 +24,15 @@ h1 {
 h2 {
 
 }
-
+h1 {
+  @include type(m);
+  color: red;
+}
 h3 {
   @include type();
+}
+
+.flex {
+  display: flex;
 }
 
