@@ -1,0 +1,7 @@
+<% _.forEach( icons, function( icon ){ %>.icon--<%= _.trimLeft(icon.className, '.') %> {
+  width: <%= icon.width %>;
+  height: <%= icon.height %>;
+  background-image: url(icons.svg#<%= _.trimLeft(icon.className, '.') %>);
+}
+<%= icon.style %>
+<% }); %>

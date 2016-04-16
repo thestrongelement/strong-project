@@ -24,7 +24,9 @@ const src = {
   includes: 'src/templates/includes/',
   macros: 'src/templates/macros/'
 }
-
+const sassPaths = [
+  src.icons
+]
 const dist = {
   path: 'dist',
   data: 'dist/api',
@@ -120,7 +122,7 @@ gulp.task('css', function () {
     .pipe($.sass({
       outputStyle: (PRODUCTION?'compressed':'expanded'),
       precision: 10,
-      includePaths: [src.styles],
+      includePaths: [src.styles, src.icons],
       errLogToConsole: true
     })
     .on('error', $.sass.logError))
@@ -136,17 +138,16 @@ gulp.task('css', function () {
     .pipe(browserSync.stream());
 });
 
-/**
- * concatenate all svg files into one sprite
- */
+
+// combine icon svg files into one sprite
 gulp.task('icons', function () {
-  return gulp.src(src.icons)
+  return gulp.src([src.icons + '*.svg', '!' + src.icons + 'icons.svg'])
 		.pipe($.imagemin({
   		progressive: true,
   		svgoPlugins: [{cleanupIDs: true}, {removeTitle: true}]
 		}))
     .pipe(svgSymbols({
-      templates: ['default-svg', 'default-css']
+      templates: ['default-svg', src.icons + 'template-css.scss']
     }))
     .pipe($.rename(function(path) {
       path.basename = "icons"
