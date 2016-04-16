@@ -1,3 +1,6 @@
+
+
+
 @import "bower_components/normalize-css/normalize";
 @import "bower_components/bourbon/app/assets/stylesheets/_bourbon.scss";
 @import "bower_components/neat/app/assets/stylesheets/_neat.scss";
@@ -9,8 +12,17 @@
 @import "mixins/weight";
 @import "mixins/clearfix";
 @import "mixins/screen";
+@import "mixins/icons";
 
 @import "base/settings";
+
+.icon {
+  @include icon(camera) {
+    fill: green;
+//    stroke: yellow;
+  };
+}
+
 
 @import "blocks/elements";
 @import "blocks/nav";
@@ -26,4 +38,3 @@
 @import "helpers/globals";
 
 @import "debug";
-

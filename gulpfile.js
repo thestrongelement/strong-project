@@ -6,6 +6,7 @@ const nunjucks = require('gulp-nunjucks-html');
 const path = require('path');
 const yargs = require('yargs');
 const browserSync = require('browser-sync').create();
+const svgSymbols = require('gulp-svg-symbols');
 
 const PRODUCTION = !!(yargs.argv.production);
 
@@ -16,6 +17,7 @@ const src = {
   scripts: 'src/scripts/**/*',
   images: 'src/images/**/*',
   styles: 'src/styles/',
+  icons: './icons/*.svg',
   fonts: 'src/fonts',
   html: 'src/templates/**/*.html',
   layouts: 'src/templates/layouts/',
@@ -123,6 +125,9 @@ gulp.task('css', function () {
     })
     .on('error', $.sass.logError))
     .pipe($.postcss([
+            require('postcss-svg-fragments')({  encoding: 'base64' })
+        ]))
+    .pipe($.postcss([
       require('autoprefixer-core')({browsers: ['last 1 version', 'ie >= 10', 'and_chr >= 2.3']})
     ]))
     .pipe($.if(PRODUCTION, $.cssnano()))
@@ -130,6 +135,25 @@ gulp.task('css', function () {
     .pipe(gulp.dest(dist.styles))
     .pipe(browserSync.stream());
 });
+
+/**
+ * concatenate all svg files into one sprite
+ */
+gulp.task('icons', function () {
+  return gulp.src(src.icons)
+		.pipe($.imagemin({
+  		progressive: true,
+  		svgoPlugins: [{cleanupIDs: true}, {removeTitle: true}]
+		}))
+    .pipe(svgSymbols({
+      templates: ['default-svg', 'default-css']
+    }))
+    .pipe($.rename(function(path) {
+      path.basename = "icons"
+    }))
+    .pipe(gulp.dest(src.styles));
+});
+
 
 // process images
 gulp.task('images', function() {
