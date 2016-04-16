@@ -6,6 +6,7 @@ const handlebars = require('gulp-compile-handlebars');
 const nunjucks = require('gulp-nunjucks-html');
 const path = require('path');
 const yargs = require('yargs');
+const svgSymbols = require('gulp-svg-symbols');
 
 const PRODUCTION = !!(yargs.argv.production);
 
@@ -15,6 +16,7 @@ const src = {
   public: 'public/**/*',
   scripts: 'src/scripts/**/*',
   images: 'src/images/**/*',
+  icons: 'icons/*.svg',
   styles: 'src/styles/*.scss',
   fonts: 'src/fonts',
   html: 'src/templates/**/*.html',
@@ -27,6 +29,7 @@ const dist = {
   data: 'dist/api',
   scripts: 'dist/js',
   images: 'dist/img',
+  icons: 'src/images',
   styles: 'dist/css',
   fonts: 'dist/fonts',
   html: 'dist/'
@@ -146,6 +149,24 @@ gulp.task('images', function() {
 		})))
 		.pipe(gulp.dest(dist.images))
 	  .pipe(reload());
+});
+
+/**
+ * concatenate all svg files into one sprite
+ */
+gulp.task('icons', function () {
+  return gulp.src(src.icons)
+		.pipe($.imagemin({
+  		progressive: true,
+  		svgoPlugins: [{cleanupIDs: true, removeTitle: true}]
+		}))
+    .pipe(svgSymbols({
+      templates: ['default-svg']
+    }))
+    .pipe($.rename(function(path) {
+      path.basename = "icons"
+    }))
+    .pipe(gulp.dest(dist.icons));
 });
 
 

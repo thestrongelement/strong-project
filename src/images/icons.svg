@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="width:0; height:0; visibility:hidden;">
+    <symbol id="star" viewBox="0 0 68 64">
+      <title>star</title><path fill="#000" d="M34 52.5L13.428 63.316l3.929-22.908L.713 24.184l23-3.342L34 0l10.286 20.842 23.001 3.342-16.644 16.224 3.93 22.908z" fill-rule="evenodd"/>
+    </symbol>
+    <symbol id="triangle" viewBox="0 0 60 60">
+      <title>triangle</title><path fill="#000" d="M30 0l30 60H0z" fill-rule="evenodd"/>
+    </symbol></svg>
