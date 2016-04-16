@@ -66,9 +66,28 @@ $colors: (
 );
 
 //elements
+$margin-bottom: map-get($spacing, reg) !global;
 $font__text: map-get($fonts, body) !global;
 $color__background: map-get($colors, light-gray) !global;
 $color__text: map-get($colors, midnight-black) !global;
+$color__shadow: #2f2f2f;
+
+$color__link: map-get($colors, aqua) !global;
+$color__link--hover: $color__link;
+
+$color__form: #bababa;
+$color__form--placeholder: #cccccc;
+$color__form--focus: #bababa;
+$color__form--error: map-get($colors, red) !global;
+$color__form--valid: #bababa;
+$color__form--disabled: #cccccc;
+$color__form--fill: #ffffff;
+
+
+
+//animation
+$time--base: 0.3s;
+
 
 //neat vars
 $max-width: #{$width--ui-max} !global;

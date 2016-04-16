@@ -119,7 +119,7 @@ gulp.task('js', function() {
 
 // process SASS
 gulp.task('css', function () {
-  return gulp.src(src.styles)
+  return gulp.src([src.styles, '!'+ src.styles + 'debug.scss'])
     .pipe($.sourcemaps.init())
     .pipe($.sass({
       outputStyle: (PRODUCTION?'compressed':'expanded'),

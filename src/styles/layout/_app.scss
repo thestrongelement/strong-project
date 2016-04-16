@@ -1,0 +1,117 @@
+/**
+* @file _app.scss
+* @author zack@thestrongelement.com
+*/
+
+%section {
+  padding-left: $width--ui-padding/2;
+  padding-right: $width--ui-padding/2;
+  @include screen(l) {
+    padding-left: $width--ui-padding;
+    padding-right: $width--ui-padding;
+  }
+  @include screen(xl) {
+    padding-left: calc((100% - 1200px)/2);
+    padding-right: calc((100% - 1200px)/2);
+  }
+}
+
+
+/**
+* @section App
+* Global header
+*/
+.app__header {
+  @extend %section;
+  position: relative;
+  height: 110px;
+  background: color(white);
+  box-shadow: 0 4px 8px 0 rgba($color--shadow, 0.04);
+}
+
+
+/**
+* @section App
+* Global main content
+*/
+.app__main {
+  //@extend %section;
+  max-width: $width--ui-max;
+  margin: 0 auto;
+}
+
+
+/**
+* @section App
+* Global header layout
+*/
+.app__logo {
+  display: block;
+  
+}
+.app__nav-control {
+  position: absolute;
+  right: 12px;
+  top: 39px;
+}
+
+.app__nav {
+  [aria-hidden=false] {
+    display: block;
+  }
+  position: absolute;
+  top: 110px;
+  background: color(white);
+  left: 0;
+  @include screen(s) {
+    float: right;
+    position: static;
+    margin-top: 38px;
+  }
+}
+
+
+/**
+* @section App
+* Global footer
+*/
+.app__footer {
+  @extend %section;
+  @include type(s, alt);
+  padding-top: 68px;
+  padding-bottom: 68px;
+  .header__ {
+
+    @include type(xs);
+    text-transform: uppercase;
+    letter-spacing: 0.14285714285714em;
+    margin-bottom: 10px;
+  }
+  .info__ {
+
+  }
+  .social__ {
+    margin-bottom: $margin-bottom;
+  }
+  .box__ {
+    margin-bottom: $margin-bottom;
+    @include screen(m) {
+      padding-left: 10px;
+      padding-right: 24px;
+      margin-bottom: 0;
+    }
+  }
+  .copyright__ {
+    display: block;
+
+    @include type(xs, alt);
+    @include weight(med);
+    text-transform: uppercase;
+    letter-spacing: 0.14285714285714em;
+    margin-top: 16px;
+    @include screen(m) {
+      padding-left: 10px;
+    }
+  }
+}
+

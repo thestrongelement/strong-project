@@ -1,0 +1,71 @@
+/**
+* @file _buttons.scss
+* @author zack@thestrongelement.com
+*/
+
+/**
+* @section Buttons
+* Base styles for button elements
+*/
+%button {
+    -webkit-font-smoothing: antialiased;
+    appearance: none;
+    background-color: transparent;
+    outline: 0;
+    border: 0;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    padding: 0;
+}
+button::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+%button--base {
+  @extend %button;
+  color: $color__text;
+  text-transform: uppercase;
+  border-width: 2px;
+  border-style: solid;
+  border-color: inherit;
+  line-height: 1;
+  padding: 1.0625rem 2.5rem;
+  transition: all 0.15s;
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  &:hover {
+    text-decoration: none;
+    color: initial;
+  }
+}
+button {
+  @extend %button;
+}
+
+input[type=submit], .button {
+  @extend %button--base;
+}
+
+.button--banner {
+    @extend %button--base;
+    color: color(red);
+    border-color: color(red);
+    &:hover {
+      background-color: color(red);
+      color: color(white);
+    }
+}
+.button--form {
+  @extend %button--base;
+  color: color(white);
+  background-color: color(red);
+  border-color: color(red);
+  width: 100%;
+}

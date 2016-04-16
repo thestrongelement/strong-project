@@ -6,33 +6,24 @@
 @import "functions/space";
 
 @import "mixins/type";
+@import "mixins/weight";
+@import "mixins/clearfix";
+@import "mixins/screen";
 
 @import "base/settings";
 
-body {
- color: $color__text;
- background: $color__background;
-}
+@import "blocks/elements";
+@import "blocks/nav";
+@import "blocks/buttons";
+@import "blocks/forms";
+@import "blocks/hamburger";
 
-.flex {
-  display: flex;
-}
+@import "layout/flow";
+@import "layout/app";
+@import "layout/page";
 
-h1 {
-  @include type(xl);
-}
-h2 {
 
-}
-h1 {
-  @include type(m);
-  color: red;
-}
-h3 {
-  @include type();
-}
+@import "helpers/globals";
 
-.flex {
-  display: flex;
-}
+@import "debug";
 

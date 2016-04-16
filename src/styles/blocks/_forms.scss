@@ -1,0 +1,64 @@
+/**
+* @file _forms.scss
+* @author zack@thestrongelement.com
+*/
+
+/**
+* @section Blocks
+* Form groups
+*/
+
+.form__set {
+    @include clearfix;
+    &[disabled], &.is-hidden {
+        display: none;
+    }
+}
+
+.form__item {
+    position: relative;
+    margin-bottom: $margin-bottom;
+    //item states
+    &.inline-- {
+      @include screen(m) {
+        &:first-child {
+          margin-right: 24px;
+        }
+        float: left;
+        width: calc(50% - 12px);;
+        display: block;
+      }
+      @include screen(l) {
+        display: inline-block;
+      }
+    }
+    //children
+    label, .label__ {
+      display: block;
+      margin-bottom: 0.375em;
+    }
+    //descendant states
+    &.has-error {
+      label {
+        color: $color__form--error;
+        &:after {
+          content: '';
+          float: right;
+          display: block;
+          width: 17px;
+          height: 17px;
+          background: url(../images/icon-error.png) no-repeat;
+          position: relative;
+          top: 36px;
+          right: 10px;
+        }
+
+      }
+      input {
+
+        
+      }
+
+    }
+   
+}

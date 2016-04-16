@@ -1,0 +1,17 @@
+@mixin weight($weight: reg) {
+  @if $weight == light {
+    font-weight: 300;
+  }
+  @if $weight == reg {
+    font-weight: 400;
+  }
+  @if $weight == med {
+    font-weight: 500;
+  }
+  @if $weight == semi {
+    font-weight: 600;
+  }
+  @if $weight == bold {
+    font-weight: 700;
+  }
+}

@@ -1,0 +1,34 @@
+/*
+see base/settings — 
+$breakpoints: (
+  xs: 480px,
+  s: 667px,
+  m: 768px,
+  l: 1024px,
+  xl: 1280px,
+  xxl: 1440px
+);
+
+*/
+
+@mixin screen($size) {
+  @media (min-width: map-get($breakpoints, $size)) { @content; }
+// 
+//   @if $size == xs {
+//     @media (min-width: map-get()) { @content; }
+//   }
+//   @else if $size == s {
+//     @media (min-width: $screen--small) { @content; }
+//   }
+//   @else if $size == m {
+//     @media (min-width: $screen--medium) { @content; }
+//   }
+//   @else if $size == l {
+//     @media (min-width: $screen--large) { @content; }
+//   }
+//   @else if $size == xl {
+//     @media (min-width: $screen--xlarge) { @content; }
+//   }
+
+}
+

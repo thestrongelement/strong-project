@@ -1,0 +1,45 @@
+.social-nav {
+
+}
+.social-nav__header {
+  @include type(s, alt);
+  @include weight(semi);
+  text-transform: uppercase;
+  color: $color--dark-gray;
+  margin-bottom: 10px;
+}
+.social-nav__item {
+  margin-right: 5px;
+  overflow: hidden;
+}
+.social-nav__link {
+  display: block;
+  width: 40px;
+  height: 40px;
+  color: transparent !important;
+  background-repeat: no-repeat;
+  background-size: contain;
+  &.linkedin-- {
+    background-image: url(../images/linkedin.png);
+  }
+  &.twitter-- {
+    background-image: url(../images/twitter.png);
+  }
+  &.google-- {
+    background-image: url(../images/google.png);
+  }
+  &.email-- {
+    background-image: url(../images/email.png);
+  }
+  &.share-- {
+    background-image: url(../images/share.png);
+  }
+}
+
+//mods
+.social-nav--article {
+  .social-nav__header {
+    float: left;
+    margin: 10px 15px 0 0;
+  }
+}

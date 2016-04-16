@@ -1,0 +1,26 @@
+/**
+* @file _globals.scss
+* @project Kuvare
+* @author zack@thestrongelement.com
+* Classes of last resort
+*/
+
+.is-phone {
+    white-space: nowrap;
+}
+.is-hidden {
+    display: none;
+}
+
+.hide-smallscreen {
+  display: none;
+  @include screen(m) {
+      display: initial;
+  }
+}
+.hide-largescreen {
+    @include screen(m) {
+        display: none;
+    }
+}
+

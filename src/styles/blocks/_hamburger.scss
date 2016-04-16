@@ -1,0 +1,88 @@
+.hamburger-icon {
+  display: block;
+  position: absolute;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  font-size: 0;
+  text-indent: -9999px;
+  appearance: none;
+  box-shadow: none;
+  border-radius: none;
+  border: none;
+  cursor: pointer;
+ // transition: background 0.2s;
+}
+
+.hamburger-icon span {
+  display: block;
+  position: absolute;
+  top: 17px;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: black;
+}
+
+.hamburger-icon span::before,
+.hamburger-icon span::after {
+  position: absolute;
+  display: block;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background-color: black;
+  content: "";
+}
+
+.hamburger-icon span::before {
+  top: -12px;
+}
+
+.hamburger-icon span::after {
+  bottom: -12px;
+}
+
+
+.hamburger-icon:focus {
+  outline: none;
+}
+
+
+.hamburger-icon {
+ // background-color: #ff3264;
+  span {
+    display: block;
+    transition: background 0s 0.2s;  
+    &::before, &::after {
+      transition-duration: 0.2s, 0.2s;
+      transition-delay: 0.2s, 0s;
+    }
+    &:before {
+      transition-property: top, transform;
+    }
+    &:after {
+      transition-property: bottom, transform;
+    }
+  }
+  &[aria-selected=true] {
+   // background-color: #cb0032;
+    span {
+      background: none;
+      &::before, &::after {
+  transition-delay: 0s, 0.2s;
+      }
+      &:before {
+  top: 0;
+  transform: rotate(45deg);
+
+      }
+      &:after {
+  bottom: 0;
+  transform: rotate(-45deg);
+      }
+    }
+  }
+}

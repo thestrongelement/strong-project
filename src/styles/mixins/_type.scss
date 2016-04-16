@@ -9,7 +9,7 @@
   line-height: nth($list, 2);
 
 
-  @if $style == header {
+  @if $style != body {
     @if map-has-key($fonts, $style) {
       font-family: map-get($fonts, $style);
     } @else {
