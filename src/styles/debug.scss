@@ -1,5 +1,13 @@
+.flow {
+  margin-bottom: 12px;
+  background: yellow;
+  &:nth-child(even) {
+    background: orange;
+  }
+}
 [class*="flow__box"] {
-  height: 50px;
+  height: 48px;
   background: lime;
+  outline: solid 1px black;
   
 }

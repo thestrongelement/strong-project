@@ -83,14 +83,16 @@ $cols: 2 3 4 5 6 7 8 9 10 11 12;
 
   @for $i from 2 through 12 {
     [class*=flow__box--#{$i}] {
-      width: calc((100% - #{$box_gutter}*#{$i})/#{$i});
+      width: calc(((100% - (#{$box_gutter}*#{$i - 1}))/#{$i});
     }
   }
+  
+  
   @for $i from 3 through 12 {
     .flow__box {
       @for $j from 2 through $i {
         &--#{$i}-#{$j} {
-          width: calc(((100% - #{$box_gutter})/#{$i})*#{$j});
+          width: calc(((((100% - (#{$box_gutter}*#{$i - 1}))/#{$i})*#{$j})) + (#{$box_gutter}*#{$j - 1}));
         }
       }
     } 
@@ -98,19 +100,19 @@ $cols: 2 3 4 5 6 7 8 9 10 11 12;
 
 }
 //set spanned colum widths
-.flow__box {
-  @include screen(m) {
-    &--3-2 {
-      width: calc(((100% - #{$box_gutter})/3)*2);
-    }
-    &--10-4 {
-      width: calc(((100% - #{$box_gutter})/10)*4);
-    }
-    &--10-6 {
-      width: calc(((100% - #{$box_gutter})/10)*6);
-    }
-  }
-}
+//.flow__box {
+//  @include screen(m) {
+//    &--3-2 {
+//      width: calc(((100% - #{$box_gutter})/3)*2);
+//    }
+//    &--10-4 {
+//      width: calc(((100% - #{$box_gutter})/10)*4);
+//    }
+//    &--10-6 {
+//      width: calc(((100% - #{$box_gutter})/10)*6);
+//    }
+//  }
+//}
 
 //
 //@each $num in $cols {

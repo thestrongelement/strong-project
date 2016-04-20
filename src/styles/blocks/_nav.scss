@@ -12,7 +12,7 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    .navlist__item {
+    .navlist__item, & > .item__ {
         float: left;
         transition: all $time--base;
     }
@@ -45,7 +45,7 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    .item__ {
+    .navlist__item, & > .item__ {
         flex: 1;
     }
     [aria-selected=true] {
