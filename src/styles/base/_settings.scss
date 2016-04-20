@@ -1,14 +1,14 @@
 //ui dimensions
-$width--ui-max: 1348px;
+$width--ui-max: em(1348);
 $width--ui-padding: 24px;
 
 $breakpoints: (
-  xs: 480px,
-  s: 667px,
-  m: 768px,
-  l: 1024px,
-  xl: 1280px,
-  xxl: 1440px
+  xs: em(480),
+  s: em(667),
+  m: em(768),
+  l: em(1024),
+  xl: em(1280),
+  xxl: em(1440)
 );
 
 $fonts: (

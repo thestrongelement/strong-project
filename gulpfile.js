@@ -122,9 +122,9 @@ gulp.task('css', function () {
       errLogToConsole: true
     })
     .on('error', $.sass.logError))
-    .pipe($.if(!PRODUCTION, $.cssnano()))
+    .pipe($.if(PRODUCTION, $.cssnano()))
     .pipe($.postcss([
-      require('autoprefixer-core')({browsers: ['last 2 versions', 'ie >= 9', 'and_chr >= 2.3']})
+      require('autoprefixer-core')({browsers: ['last 1 version', 'ie >= 10', 'and_chr >= 2.3']})
     ]))
     .pipe($.if(!PRODUCTION, $.sourcemaps.write()))
     .pipe(gulp.dest(dist.styles))

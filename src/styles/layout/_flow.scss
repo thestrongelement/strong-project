@@ -3,6 +3,145 @@
 * @author zack@thestrongelement.com
 */
 
+
+/*
+    .flow
+    &.flex--
+        .flow__box
+*/
+
+$box_gutter: $width--ui-padding;
+
+// COLUMNS
+%flow {
+    @include clearfix;
+    @include screen(m) {
+      [class*=flow__box] {
+        float: left;
+        margin-right: $box_gutter;
+        &:last-child {
+          margin-right: 0;
+        }
+        &.center-- {
+          //this can only be used when there is a single container
+          float: none;
+          margin: 0 auto;
+        }
+      }
+    }
+}
+.flow, .flow--reverse {
+    @extend %flow;
+}
+//reverse order (right to left)
+.flow--reverse {
+  @include screen(m) {
+    [class*=flow__box] {
+      float: right;
+      margin-left: $box_gutter;
+      margin-right: 0;
+      &:last-child {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+
+// FLEX
+%flex {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  @include screen(m) {
+    flex-direction: row;
+  }
+}
+.flow--flex {
+  @extend %flex;
+  @include screen(m) {
+    //these override order for largescreens (see POS upsell for example)
+    .order-1-- {
+      order: 1;
+    }
+    .order-2-- {
+      order: 2;    
+    }
+    .order-3-- {
+      order: 3;    
+    }
+  }
+}
+
+
+// FLOW BOXES
+$cols: 2 3 4 5 6 7 8 9 10 11 12;
+
+@for $i from 2 through 12 {
+  [class*=flow__box--#{$i}] {
+    @include screen(m) {
+        width: calc((100% - #{$box_gutter}*#{$i})/#{$i});
+    }
+  }
+}
+//
+//@each $num in $cols {
+//  [class*=flow__box--#{$num}] {
+//    @include screen(m) {
+//        width: calc((100% - #{$box_gutter}*#{$num})/#{$num});
+//    }
+//  }
+//}
+/*
+
+[class*=flow__box--2] {
+  @include screen(m) {
+      width: calc((100% - #{$box_gutter})/2);
+  }
+}
+[class*=flow__box--3] {
+  @include screen(m) {
+    width: calc((100% - #{$box_gutter})/3);
+  }
+} 
+[class*=flow__box--10] {
+  @include screen(m) {
+    width: calc((100% - #{$box_gutter})/10);
+    &.shift-1-- {      
+      margin-left: calc((100% - #{$box_gutter})/10);
+    }
+    //this is not intutive for reverse flow (can do better)
+    &.pull-1-- {
+      margin-right: calc((100% - #{$box_gutter})/10) !important;
+    }
+  }
+} 
+.flow__box {
+  @include screen(m) {
+    &--3-2 {
+      width: calc(((100% - #{$box_gutter})/3)*2);
+    }
+    &--10-4 {
+      width: calc(((100% - #{$box_gutter})/10)*4);
+    }
+    &--10-6 {
+      width: calc(((100% - #{$box_gutter})/10)*6);
+    }
+  }
+}
+*/
+
+
+
+
+
+
+
+
+
+
+/*
+
 %flex {
   .square-- {
     min-height: 100vw;
@@ -81,3 +220,6 @@
   }
 
 }
+
+
+*/
