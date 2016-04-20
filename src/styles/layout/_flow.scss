@@ -83,16 +83,59 @@ $cols: 2 3 4 5 6 7 8 9 10 11 12;
 
   @for $i from 2 through 12 {
     [class*=flow__box--#{$i}] {
-      width: calc(((100% - (#{$box_gutter}*#{$i - 1}))/#{$i});
+      width: calc(
+        (100% - 
+          (#{$box_gutter} * #{$i - 1})  
+        )/
+        #{$i}
+      );
+      $length: $i - 1;
+      @for $k from 1 through $length {
+        
+        &.shift-#{$k}-- {
+          margin-left: 
+            calc(
+              (
+                (100% - #{$box_gutter})/ #{$i}
+              ) * 
+              #{$k}             
+            );
+        }
+        &.pull-#{$k}-- {
+          background: yellow;
+          margin-right: 
+            calc(
+              (
+                (100% - #{$box_gutter})/ #{$i}
+              ) * 
+              #{$k}              
+            );
+        }
+      }
     }
   }
   
-  
+  //need to cehck these, can maybe simplifiy
   @for $i from 3 through 12 {
     .flow__box {
       @for $j from 2 through $i {
         &--#{$i}-#{$j} {
-          width: calc(((((100% - (#{$box_gutter}*#{$i - 1}))/#{$i})*#{$j})) + (#{$box_gutter}*#{$j - 1}));
+          width: 
+            calc(          
+              (
+                (
+                  (100% - 
+                    (#{$box_gutter} * #{$i - 1})
+                  )/
+                  #{$i}
+                )
+                * #{$j}
+              )
+              + 
+              (
+                #{$box_gutter}*#{$j - 1}
+              )        
+          );   
         }
       }
     } 
