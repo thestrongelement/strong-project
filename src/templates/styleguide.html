@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block css %}
+  <link rel="stylesheet" href="css/styleguide.css">
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+
+
+{% set flow = page.flow %}
+{% set box = flow.box %}
+{% set box_class = flow.class_root + "__" + box.class_root %}
+
+
+<h2><code>.{{ flow.class_root }}</code></h2>
+{%- for i in range(0, page.flow.cols) -%}
+
+  {% set cols = loop.index %}
+  <h3><code>[class*="{{ flow.box.class_root }}__{{ flow.class_root }}--{{ loop.index }}"]</code></h3>
+
+<!--
+
+  <div class="{{ flow.class_root }}"> 
+    {%- for j in range(0, cols) -%}
+      {%- set box_class_name = box_class + "--" + cols -%}  
+      <div class="{{ box_class_name }}">
+        .{{ box_class_name }}    
+      </div>
+    {%- endfor %}  
+  </div>  
+-->
+  
+  
+  
+{%- for j in range(0, cols) -%}
+  {%- set col_num = loop.length -%}   
+  {%- set box_class_name = box_class + "--" + col_num -%}   
+  <div class="{{ flow.class_root }}"> 
+
+    {%- for k in range(0, cols) -%}
+     {%- set box_num = loop.index -%}  
+     {%- set box_span = loop.revindex -%}   
+     
+{%- if loop.first -%}
+  <div class="{{ box_class_name }}-{{ box_num }}">
+        {{box_class_name}}-{{ box_num }}
+      </div>
+     {%- else %}  
+      <div class="{{ box_class_name }}">
+        {{box_class_name}}<br>
+        {{ box_num }} -- {{box_span}}
+      </div>   
+{%- endif %}  
+               
+ 
+    {%- endfor %} 
+  
+  </div> 
+{%- endfor %} 
+ 
+  
+  
+{%- endfor %}
+
+
+
+
+{% endblock %}

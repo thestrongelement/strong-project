@@ -1,0 +1,10 @@
+{
+  "title": "Style Guide",
+  "flow": {
+    "cols": 12,
+    "class_root": "flow",
+    "box": {
+      "class_root": "box"
+    }
+  }
+}
