@@ -15,6 +15,10 @@ $box_gutter: $width--ui-padding;
 // COLUMNS
 %flow {
     @include clearfix;
+    margin-bottom: $margin-bottom;
+    &:last-child {
+      margin-bottom: 0;
+    }
     @include screen(m) {
       [class*=flow__box] {
         float: left;
@@ -53,9 +57,17 @@ $box_gutter: $width--ui-padding;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  margin-bottom: $margin-bottom;
+  &:last-child {
+    margin-bottom: 0;
+  }
   @include screen(m) {
     flex-direction: row;
   }
+  .flow__box {
+    flex: 1;
+    padding: $box_gutter;
+  }  
 }
 .flow--flex {
   @extend %flex;
@@ -71,12 +83,13 @@ $box_gutter: $width--ui-padding;
       order: 3;    
     }
   }
+  &.vcenter-- {
+    align-items: center;
+  }
 }
 
 
 // FLOW BOXES
-$cols: 2 3 4 5 6 7 8 9 10 11 12;
-
 //set base column widths for 2-12 cols
 //everything stacks under screen(m)
 @include screen(m) {
@@ -96,9 +109,13 @@ $cols: 2 3 4 5 6 7 8 9 10 11 12;
           margin-left: 
             calc(
               (
-                (100% - #{$box_gutter})/ #{$i}
+                (100% - 
+                  (#{$box_gutter} * #{$i - 1})
+                )/ #{$i}
               ) * 
-              #{$k}             
+              #{$k} + (
+                #{$box_gutter * $k}
+              )             
             );
         }
         &.pull-#{$k}-- {
@@ -106,9 +123,13 @@ $cols: 2 3 4 5 6 7 8 9 10 11 12;
           margin-right: 
             calc(
               (
-                (100% - #{$box_gutter})/ #{$i}
+                (100% - 
+                  (#{$box_gutter} * #{$i - 1})
+                )/ #{$i}
               ) * 
-              #{$k}              
+              #{$k} + (
+                #{$box_gutter * $k}
+              )             
             );
         }
       }
