@@ -33,15 +33,15 @@ const dist = {
   html: 'dist/'
 }
 
-// environment setup
+// ENVIRONMENT SETUP
 var server;
 const date = new Date();
 
-//data
+//DATE
 const app = require('./' + src.data + 'app.json');
+const pkg = require('./package.json');
 
-// helpers
-
+// HELPERS
 // get key from file name, e.g. index.html returns index
 function getPageKey(file) {
   var filePath = path.basename(file.path);
@@ -122,10 +122,10 @@ gulp.task('css', function () {
       errLogToConsole: true
     })
     .on('error', $.sass.logError))
-    .pipe($.if(PRODUCTION, $.cssnano()))
     .pipe($.postcss([
       require('autoprefixer-core')({browsers: ['last 1 version', 'ie >= 10', 'and_chr >= 2.3']})
     ]))
+    .pipe($.if(PRODUCTION, $.cssnano()))
     .pipe($.if(!PRODUCTION, $.sourcemaps.write()))
     .pipe(gulp.dest(dist.styles))
     .pipe(browserSync.stream());

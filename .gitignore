@@ -18,3 +18,5 @@ build
 www
 .tmp
 *.log
+.ftppass
+goog*.html
