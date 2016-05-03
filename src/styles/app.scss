@@ -4,7 +4,7 @@
 @import "bower_components/bourbon/app/assets/stylesheets/_bourbon.scss";
 @import "bower_components/neat/app/assets/stylesheets/_neat.scss";
 
-@import "icons";
+//@import "icons";
 
 @import "functions/color";
 @import "functions/space";
@@ -17,11 +17,12 @@
 
 @import "base/settings";
 
-.icon {
-  @include icon(camera) {
-    fill: green;
-//    stroke: yellow;
-  };
+.icon-test {
+  @include icon(before, triangle, green) {
+    width: 20px;
+    height: 20px;
+    display: block;
+  }
 }
 
 

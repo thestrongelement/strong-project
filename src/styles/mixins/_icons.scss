@@ -1,20 +1,70 @@
-
-
-@mixin icon($name) {
-
-  &:before {
-  content: '';
-  display: inline-block;
-  vertical-align: middle;
-  background-image: url(../images/symbols.svg##{$name});
+%icon {
   background-size: contain;
   background-repeat: no-repeat;
-  width: 50px;
-  height: 50px;
-  @content;
-  }
-
 }
+.icon--star {
+  @extend %icon;
+  background-image: url(../images/icons.svg#star);
+  width: 68px;
+  height: 64px;
+}
+
+.icon--triangle {
+  @extend %icon;
+  background-image: url(../images/icons.svg#triangle);
+  width: 60px;
+  height: 60px;
+}
+
+
+
+
+$icons: (
+
+  star: 68px 64px,
+
+  triangle: 60px 60px,
+
+);
+
+
+@mixin icon($position: before, $icon: false, $color: false) {
+    @if $position == both {
+        $position: 'before, &:after';
+    }
+    &:#{$position} {
+        @if $icon {
+            content: '';
+            background-image: url(../images/icons.svg##{$icon});
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        @if $color {
+            fill: $color;
+        }
+        @content;
+    }
+}
+
+
+
+// 
+// 
+// @mixin icon($name) {
+// 
+//   &:before {
+//   content: '';
+//   display: inline-block;
+//   vertical-align: middle;
+//   background-image: url(../images/symbols.svg##{$name});
+//   background-size: contain;
+//   background-repeat: no-repeat;
+//   width: 50px;
+//   height: 50px;
+//   @content;
+//   }
+// 
+// }
 
 /*
 

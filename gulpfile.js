@@ -15,7 +15,8 @@ const src = {
   data: 'data/',
   public: 'public/**/*',
   scripts: 'src/scripts/**/*',
-  images: 'src/images/**/*',
+  images: 'src/images',
+  imagesToProcess: 'src/images/**/*',
   styles: 'src/styles/',
   icons: './icons/',
   iconsToProcess: './icons/*.svg',
@@ -128,9 +129,7 @@ gulp.task('css', function () {
     })
     .on('error', $.sass.logError))
     .pipe($.postcss([
-            require('postcss-svg-fragments')({  encoding: 'base64' })
-        ]))
-    .pipe($.postcss([
+      require('postcss-svg-fragments')({ encoding: 'base64' }),
       require('autoprefixer-core')({browsers: ['last 1 version', 'ie >= 10', 'and_chr >= 2.3']})
     ]))
     .pipe($.if(PRODUCTION, $.cssnano()))
@@ -140,29 +139,12 @@ gulp.task('css', function () {
 });
 
 
-// combine icon svg files into one sprite
-gulp.task('icons', function () {
-  return gulp.src([src.iconsToProcess, '!' + src.icons + 'icons.svg'])
-		.pipe($.imagemin({
-  		progressive: true,
-  		svgoPlugins: [{cleanupIDs: true}, {removeTitle: true}]
-		}))
-    .pipe(svgSymbols({
-      templates: ['default-svg', src.icons + 'template-css.scss']
-    }))
-    .pipe($.rename(function(path) {
-      path.basename = "icons"
-    }))
-    .pipe(gulp.dest(src.styles));
-});
-
-
 // process images
 gulp.task('images', function() {
-	gulp.src(src.images)
+	gulp.src(src.imagesToProcess)
 		.pipe($.if(PRODUCTION, $.imagemin({
   		progressive: true,
-  		svgoPlugins: [{cleanupIDs: true, removeTitle: true}]
+  		svgoPlugins: [{ cleanupIDs: true }, { removeTitle: true }]
 		})))
 		.pipe(gulp.dest(dist.images))
 });
@@ -170,18 +152,22 @@ gulp.task('images', function() {
 
 // combine icon svg files into one sprite
 gulp.task('icons', function () {
-  return gulp.src([src.icons + '*.svg', '!' + src.icons + 'icons.svg'])
+  return gulp.src([src.iconsToProcess])
 		.pipe($.imagemin({
   		progressive: true,
-  		svgoPlugins: [{cleanupIDs: true, removeTitle: true}]
+  		svgoPlugins: [{cleanupIDs: true}, {removeTitle: true}]
 		}))
     .pipe(svgSymbols({
       templates: ['default-svg', src.icons + 'template-css.scss']
     }))
-    .pipe($.rename(function(path) {
+    .pipe($.if(/[.]scss$/, $.rename(function(path) {
+      path.basename = "_icons"
+    })))
+    .pipe($.if(/[.]scss$/, gulp.dest(src.styles + 'mixins')))    
+    .pipe($.if(/[.]svg$/, $.rename(function(path) {
       path.basename = "icons"
-    }))
-    .pipe(gulp.dest(src.icons));
+    })))
+    .pipe($.if(/[.]svg$/, gulp.dest(src.images)));
 });
 
 
@@ -201,7 +187,7 @@ gulp.task('public', function() {
 
 //build
 gulp.task('build', function(cb) {
-  $.sequence('clean',['public','images','css','js','html'], cb);
+  $.sequence('clean','icons',['public','images','css','js','html'], cb);
 });
 
 gulp.task('default', function (cb) {
