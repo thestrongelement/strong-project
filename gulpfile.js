@@ -17,7 +17,8 @@ const src = {
   scripts: 'src/scripts/**/*',
   images: 'src/images/**/*',
   styles: 'src/styles/',
-  icons: './icons/*.svg',
+  icons: './icons/',
+  iconsToProcess: './icons/*.svg',
   fonts: 'src/fonts',
   html: 'src/templates/**/*.html',
   layouts: 'src/templates/layouts/',
@@ -141,7 +142,7 @@ gulp.task('css', function () {
 
 // combine icon svg files into one sprite
 gulp.task('icons', function () {
-  return gulp.src([src.icons + '*.svg', '!' + src.icons + 'icons.svg'])
+  return gulp.src([src.iconsToProcess, '!' + src.icons + 'icons.svg'])
 		.pipe($.imagemin({
   		progressive: true,
   		svgoPlugins: [{cleanupIDs: true}, {removeTitle: true}]
