@@ -168,6 +168,23 @@ gulp.task('images', function() {
 });
 
 
+// combine icon svg files into one sprite
+gulp.task('icons', function () {
+  return gulp.src([src.icons + '*.svg', '!' + src.icons + 'icons.svg'])
+		.pipe($.imagemin({
+  		progressive: true,
+  		svgoPlugins: [{cleanupIDs: true, removeTitle: true}]
+		}))
+    .pipe(svgSymbols({
+      templates: ['default-svg', src.icons + 'template-css.scss']
+    }))
+    .pipe($.rename(function(path) {
+      path.basename = "icons"
+    }))
+    .pipe(gulp.dest(src.icons));
+});
+
+
 // copy JSON files
 gulp.task('data', function() {
   return gulp.src(src.data+'**/*.json')
