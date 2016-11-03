@@ -1,11 +1,10 @@
 const gulp = require('gulp');
 const $ = require('gulp-load-plugins')();
+const browserSync = require('browser-sync');
 const del = require('del');
-const handlebars = require('gulp-compile-handlebars');
 const nunjucks = require('gulp-nunjucks-html');
 const path = require('path');
 const yargs = require('yargs');
-const browserSync = require('browser-sync').create();
 
 const PRODUCTION = !!(yargs.argv.production);
 
@@ -33,15 +32,15 @@ const dist = {
   html: 'dist/'
 }
 
-// ENVIRONMENT SETUP
+// environment setup
 var server;
 const date = new Date();
 
-//DATE
+//data
 const app = require('./' + src.data + 'app.json');
-const pkg = require('./package.json');
 
-// HELPERS
+// helpers
+
 // get key from file name, e.g. index.html returns index
 function getPageKey(file) {
   var filePath = path.basename(file.path);
@@ -73,14 +72,17 @@ var getPageData = function(file) {
 };
 
 //TASK RUNNERS
-gulp.task('serve', function (done) {
-  browserSync.init({
-      server: dist.path,
-      open: true,
-      reloadOnRestart: true,
-      reloadDelay: 100
+gulp.task('serve', ['build'], function () {
+  server = browserSync({
+    notify: false,
+    port: 9000,
+    server: {
+      baseDir: [dist.path]
+    }
   });
-  done();
+  gulp.watch(src.html, ['html']);
+  gulp.watch(src.styles + '**/*', ['css']);
+  gulp.watch(src.scripts + '**/*', ['js']);
 });
 
 // build static HTML files
@@ -95,20 +97,21 @@ gulp.task('html', function () {
       }
     }))
     .pipe(gulp.dest(dist.path))
-    .pipe(browserSync.stream());
+    .pipe(reload())
 });
 
 
 // process and transpile JS
 gulp.task('js', function() {
-  return gulp.src(src.scripts)
+  return gulp.src(src.scripts + 'app.js')
     .pipe($.include())
+      .on('error', console.log)
     .pipe($.sourcemaps.init())
     .pipe($.babel())
     .pipe($.if(PRODUCTION, $.uglify()))
     .pipe($.if(!PRODUCTION, $.sourcemaps.write()))
 		.pipe(gulp.dest(dist.scripts))
-    .pipe(browserSync.stream());
+		.pipe(reload());
 });
 
 // process SASS
@@ -122,13 +125,13 @@ gulp.task('css', function () {
       errLogToConsole: true
     })
     .on('error', $.sass.logError))
-    .pipe($.postcss([
-      require('autoprefixer-core')({browsers: ['last 1 version', 'ie >= 10', 'and_chr >= 2.3']})
-    ]))
     .pipe($.if(PRODUCTION, $.cssnano()))
+    .pipe($.postcss([
+      require('autoprefixer-core')({browsers: ['last 2 versions', 'ie >= 9', 'and_chr >= 2.3']})
+    ]))
     .pipe($.if(!PRODUCTION, $.sourcemaps.write()))
     .pipe(gulp.dest(dist.styles))
-    .pipe(browserSync.stream());
+    .pipe(reload());
 });
 
 // process images
@@ -157,16 +160,17 @@ gulp.task('public', function() {
 });
 
 //build
-gulp.task('build', function(cb) {
-  $.sequence('clean',['public','images','css','js','html'], cb);
+gulp.task('build', $.sequence('clean','public','images','css','js','html'));
+
+
+gulp.task('default', function () {
+  gulp.start('serve');
 });
 
-gulp.task('default', function (cb) {
-  $.sequence('build','serve','watch',cb);
-});
 
-gulp.task('watch', function () {
-  gulp.watch(src.html, ['html']);
-  gulp.watch(src.styles + '**/*', ['css']);
-  gulp.watch(src.scripts, ['js']);
-});
+function reload() {
+  if (server) {
+    return browserSync.reload({ stream: true });
+  }
+  return $.util.noop();
+}
