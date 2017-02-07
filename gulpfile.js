@@ -8,19 +8,22 @@ const yargs = require('yargs');
 const browserSync = require('browser-sync').create();
 
 const PRODUCTION = !!(yargs.argv.production);
+const DEBUG = !!(yargs.argv.debug);
 
 const src = {
   path: 'src/',
   data: 'data/',
-  public: 'public/**/*',
+  public: 'public/',
   scripts: 'src/scripts/**/*',
   images: 'src/images/**/*',
   styles: 'src/styles/',
+  bower: 'bower_components/',
   fonts: 'src/fonts',
   html: 'src/templates/**/*.html',
   layouts: 'src/templates/layouts/',
   includes: 'src/templates/includes/',
-  macros: 'src/templates/macros/'
+  macros: 'src/templates/macros/',
+  svgs: 'src/svg/',
 }
 
 const dist = {
@@ -112,7 +115,12 @@ gulp.task('js', function() {
 });
 
 // process SASS
-gulp.task('css', function () {
+gulp.task('css', ['less'], function () {
+    console.log('serving Less');
+});
+
+// process SASS
+gulp.task('sass', function () {
   return gulp.src([src.styles + '*.scss', '!'+ src.styles + 'debug.scss'])
     .pipe($.sourcemaps.init())
     .pipe($.sass({
@@ -130,6 +138,16 @@ gulp.task('css', function () {
     .pipe(gulp.dest(dist.styles))
     .pipe(browserSync.stream());
 });
+
+// process LESS
+gulp.task('less', function () {
+  return gulp.src([src.styles + '*.less', '!'+ src.styles + 'debug.less'])
+    .pipe($.less({
+      paths: [src.styles, src.bower]
+    }))
+    .pipe(gulp.dest(dist.styles));
+});
+
 
 // process images
 gulp.task('images', function() {
@@ -152,7 +170,7 @@ gulp.task('clean', del.bind(null, [dist.path]));
 
 // process static files (for favicon.ico, touch icons, etc.)
 gulp.task('public', function() {
-  return gulp.src(src.public)
+  return gulp.src(src.public + '**/*')
 	  .pipe(gulp.dest(dist.path));
 });
 
